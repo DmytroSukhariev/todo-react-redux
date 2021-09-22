@@ -1,32 +1,53 @@
 import React, { useEffect, useState } from "react";
-import _ from "lodash";
+import _ from "lodash/fp";
 import { Alert, List } from "rsuite";
 
-import { TodoItem, Categories } from "types";
+import { Categories, TodoItem } from "types";
 import { AddTodoModal } from "components/add-todo-modal";
 import { TodoItemComponent } from "components/todo-item-component";
 import { CategorySelector } from "components/category-selector";
+import { Search } from "components/search";
 
 export const Todo: React.FC = () => {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
   const [category, setCategory] = useState<Categories>(Categories.ALL);
   const [displayTodos, setDisplayTodos] = useState<Array<TodoItem>>(todos);
   const [newTodoModalShown, setNewTodoModalShown] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const doneLength = todos.reduce(
     (count, { done }) => (done ? count + 1 : count),
     0
   );
 
+  const filterByCategory =
+    (category: Categories) => (todos: Array<TodoItem>) => {
+      switch (category) {
+        case Categories.ALL:
+          return todos;
+        case Categories.ACTIVE:
+          return todos.filter(({ done }) => !done);
+        case Categories.DONE:
+          return todos.filter(({ done }) => done);
+      }
+    };
+
+  const filterBySearchQuery =
+    (searchQuery: string) => (todos: Array<TodoItem>) =>
+      _.isEmpty(searchQuery)
+        ? todos
+        : todos.filter(
+            ({ title }) =>
+              title.toLowerCase().search(searchQuery.toLowerCase()) >= 0
+          );
+
   useEffect(() => {
-    setDisplayTodos(
-      {
-        [Categories.ALL]: () => todos,
-        [Categories.ACTIVE]: () => todos.filter(({ done }) => !done),
-        [Categories.DONE]: () => todos.filter(({ done }) => done),
-      }[category]()
-    );
-  }, [category, todos.length, doneLength]);
+    _.flow([
+      filterByCategory(category),
+      filterBySearchQuery(searchQuery),
+      setDisplayTodos,
+    ])(todos);
+  }, [category, todos.length, doneLength, searchQuery]);
 
   const hideModal = () => {
     setNewTodoModalShown(false);
@@ -60,6 +81,10 @@ export const Todo: React.FC = () => {
     setCategory(cat);
   };
 
+  const handleSearch = (searchQuery: string) => {
+    setSearchQuery(searchQuery);
+  };
+
   return (
     <div
       style={{
@@ -80,6 +105,7 @@ export const Todo: React.FC = () => {
         }}
       >
         <button onClick={showModal}>Add new</button>
+        <Search handleSearch={handleSearch} />
         <CategorySelector
           handleSelectCategory={handleSetCategory}
           activeCategory={category}

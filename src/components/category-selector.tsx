@@ -19,7 +19,7 @@ export const CategorySelector: React.FC<Props> = ({
   handleSelectCategory,
 }) => (
   <Nav
-    appearance={"tabs"}
+    appearance={"subtle"}
     activeKey={activeCategory}
     onSelect={handleSelectCategory}
   >

@@ -34,7 +34,7 @@ export const AddTodoModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal show={showTodoModal}>
+    <Modal show={showTodoModal} onHide={hideTodoModal}>
       <Modal.Header>
         <Modal.Title>Add new ToDo item</Modal.Title>
       </Modal.Header>
