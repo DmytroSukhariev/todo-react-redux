@@ -19,6 +19,7 @@ export const TodoItemComponent: React.FC<Props> = ({
     <div
       style={{
         display: "flex",
+        justifyContent: "space-between",
       }}
     >
       <Checkbox
@@ -36,6 +37,7 @@ export const TodoItemComponent: React.FC<Props> = ({
           display: "flex",
           alignItems: "center",
           margin: "0 20px",
+          maxWidth: "20vw",
         }}
       >
         {title}
