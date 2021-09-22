@@ -1,11 +1,12 @@
 import React from "react";
 import moment from "moment";
-import { Checkbox } from "rsuite";
+import { Checkbox, IconButton, Icon } from "rsuite";
 
 import { TodoItem } from "types";
 
 type Props = {
   toggleDone: (id: string) => void;
+  handleDelete: (id: string) => void;
 } & TodoItem;
 
 export const TodoItemComponent: React.FC<Props> = ({
@@ -13,6 +14,7 @@ export const TodoItemComponent: React.FC<Props> = ({
   title,
   createdDate,
   done,
+  handleDelete,
   toggleDone,
 }) => {
   return (
@@ -51,6 +53,10 @@ export const TodoItemComponent: React.FC<Props> = ({
       >
         {moment(createdDate).format("YYYY-MM-DD hh:mm")}
       </span>
+      <IconButton
+        icon={<Icon icon={"trash"} />}
+        onClick={() => handleDelete(id)}
+      />
     </div>
   );
 };
