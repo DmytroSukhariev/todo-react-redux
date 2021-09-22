@@ -3,7 +3,7 @@ import { Nav } from "rsuite";
 
 import { Categories } from "types";
 
-type Props = {
+export type Props = {
   activeCategory: Categories;
   handleSelectCategory: (category: Categories) => void;
 };

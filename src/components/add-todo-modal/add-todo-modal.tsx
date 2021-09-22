@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import { TodoItem } from "types";
 
-type Props = {
+export type Props = {
   showTodoModal: boolean;
   hideTodoModal: () => void;
   setData: (todoData: TodoItem) => void;
@@ -26,7 +26,7 @@ export const AddTodoModal: React.FC<Props> = ({
     setData({
       title,
       createdDate: new Date(),
-      done: false,
+      isDone: false,
       id: uuid(),
     });
 

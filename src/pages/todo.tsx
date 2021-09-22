@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "rsuite";
 import _ from "lodash/fp";
-import { Alert, List } from "rsuite";
 
 import { Categories, TodoItem } from "types";
-import { AddTodoModal } from "components/add-todo-modal";
-import { TodoItemComponent } from "components/todo-item-component";
-import { CategorySelector } from "components/category-selector";
-import { Search } from "components/search";
+import { cutStringIfNeeded } from "utils";
+
+import { ControlPanel } from "components/control-panel";
+import { TodoList } from "components/todo-list";
 
 export const Todo: React.FC = () => {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
@@ -16,7 +16,7 @@ export const Todo: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const doneLength = todos.reduce(
-    (count, { done }) => (done ? count + 1 : count),
+    (count, { isDone }) => (isDone ? count + 1 : count),
     0
   );
 
@@ -26,9 +26,9 @@ export const Todo: React.FC = () => {
         case Categories.ALL:
           return todos;
         case Categories.ACTIVE:
-          return todos.filter(({ done }) => !done);
+          return todos.filter(({ isDone }) => !isDone);
         case Categories.DONE:
-          return todos.filter(({ done }) => done);
+          return todos.filter(({ isDone }) => isDone);
       }
     };
 
@@ -58,23 +58,42 @@ export const Todo: React.FC = () => {
   };
 
   const addNewTodo = (newTodoItem: TodoItem | null) => {
-    if (_.isNil(newTodoItem)) return Alert.warning("Nothing to add");
+    if (_.isNil(newTodoItem)) return;
+    Alert.success(`${cutStringIfNeeded(newTodoItem.title)} successfully added`);
     setTodos([...todos, newTodoItem]);
-    Alert.success("Todo added");
   };
 
   const toggleDone = (id: string) => {
     setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, done: !todo.done, completionDate: new Date() }
-          : todo
-      )
+      todos.map((todo) => {
+        const isToBeToggled = todo.id === id;
+
+        if (!isToBeToggled) return todo;
+
+        const newStatus = !todo.isDone;
+
+        Alert.success(
+          `${cutStringIfNeeded(todo.title)} moved to ${
+            newStatus ? "done" : "active"
+          }`
+        );
+
+        return { ...todo, isDone: newStatus, completedDate: new Date() };
+      })
     );
   };
 
   const handleDelete = (id: string) => {
-    setTodos(todos.filter(({ id: _id }) => id !== _id));
+    setTodos(
+      todos.filter(({ id: _id, title }) => {
+        const toDelete = id === _id;
+
+        if (toDelete) {
+          Alert.success(`${cutStringIfNeeded(title)} successfully deleted`);
+        }
+        return !toDelete;
+      })
+    );
   };
 
   const handleSetCategory = (cat: Categories) => {
@@ -96,46 +115,20 @@ export const Todo: React.FC = () => {
         width: "40vw",
       }}
     >
-      <div
-        className={"controll-pannel"}
-        style={{
-          margin: "10px",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <button onClick={showModal}>Add new</button>
-        <Search handleSearch={handleSearch} />
-        <CategorySelector
-          handleSelectCategory={handleSetCategory}
-          activeCategory={category}
-        />
-        <AddTodoModal
-          showTodoModal={newTodoModalShown}
-          hideTodoModal={hideModal}
-          setData={addNewTodo}
-        />
-      </div>
-      <div
-        className={"todo-list"}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          margin: "10px",
-        }}
-      >
-        <List>
-          {displayTodos.map((todo) => (
-            <List.Item key={todo.id}>
-              <TodoItemComponent
-                {...todo}
-                toggleDone={toggleDone}
-                handleDelete={handleDelete}
-              />
-            </List.Item>
-          ))}
-        </List>
-      </div>
+      <ControlPanel
+        showModal={showModal}
+        handleSearch={handleSearch}
+        handleSetCategory={handleSetCategory}
+        currentCategory={category}
+        showAddTodoModal={newTodoModalShown}
+        hideAddTodoModal={hideModal}
+        addNewTodo={addNewTodo}
+      />
+      <TodoList
+        todos={displayTodos}
+        toggleDone={toggleDone}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };

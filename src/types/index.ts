@@ -1,9 +1,9 @@
 export type TodoItem = {
   id: string;
   title: string;
-  done: boolean;
+  isDone: boolean;
   createdDate: Date;
-  completionDate?: Date;
+  completedDate?: Date;
 };
 
 export enum Categories {

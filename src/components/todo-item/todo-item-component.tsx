@@ -4,7 +4,7 @@ import { Checkbox, IconButton, Icon } from "rsuite";
 
 import { TodoItem } from "types";
 
-type Props = {
+export type Props = {
   toggleDone: (id: string) => void;
   handleDelete: (id: string) => void;
 } & TodoItem;
@@ -13,7 +13,7 @@ export const TodoItemComponent: React.FC<Props> = ({
   id,
   title,
   createdDate,
-  done,
+  isDone,
   handleDelete,
   toggleDone,
 }) => {
@@ -31,7 +31,7 @@ export const TodoItemComponent: React.FC<Props> = ({
           alignItems: "center",
         }}
         value={id}
-        checked={done}
+        checked={isDone}
         onChange={toggleDone}
       />
       <span

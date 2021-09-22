@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Icon, Input, InputGroup } from "rsuite";
 
-type Props = {
+export type Props = {
   handleSearch: (searchQuery: string) => void;
 };
 
