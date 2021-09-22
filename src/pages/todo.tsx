@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { Alert } from "rsuite";
+import { Alert, List } from "rsuite";
 
 import { TodoItem } from "types";
 import { AddTodoModal } from "components/add-todo-modal";
@@ -35,16 +35,39 @@ export const Todo: React.FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={showModal}>Add new</button>
-      <AddTodoModal
-        showTodoModal={newTodoModalShown}
-        hideTodoModal={hideModal}
-        setData={addNewTodo}
-      />
-      {todos.map((todo) => (
-        <TodoItemComponent {...todo} key={todo.id} toggleDone={toggleDone} />
-      ))}
+    <div
+      style={{
+        minHeight: "500px",
+        display: "flex",
+        alignContent: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      <div className={"controll-pannel"} style={{ margin: "10px" }}>
+        <button onClick={showModal}>Add new</button>
+        <AddTodoModal
+          showTodoModal={newTodoModalShown}
+          hideTodoModal={hideModal}
+          setData={addNewTodo}
+        />
+      </div>
+      <div
+        className={"todo-list"}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "10px",
+        }}
+      >
+        <List>
+          {todos.map((todo) => (
+            <List.Item key={todo.id}>
+              <TodoItemComponent {...todo} toggleDone={toggleDone} />
+            </List.Item>
+          ))}
+        </List>
+      </div>
     </div>
   );
 };

@@ -16,10 +16,39 @@ export const TodoItemComponent: React.FC<Props> = ({
   toggleDone,
 }) => {
   return (
-    <div>
-      <Checkbox value={id} checked={done} onChange={toggleDone} />
-      <span>{title}</span>
-      <span>{moment(createdDate).format("YYYY-MM-DD hh:mm")}</span>
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
+      <Checkbox
+        style={{
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+        }}
+        value={id}
+        checked={done}
+        onChange={toggleDone}
+      />
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          margin: "0 20px",
+        }}
+      >
+        {title}
+      </span>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          margin: "0 20px",
+        }}
+      >
+        {moment(createdDate).format("YYYY-MM-DD hh:mm")}
+      </span>
     </div>
   );
 };
