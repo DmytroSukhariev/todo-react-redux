@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Alert, List, Nav } from "rsuite";
+import { Alert, List } from "rsuite";
 
-import { TodoItem } from "types";
+import { TodoItem, Categories } from "types";
 import { AddTodoModal } from "components/add-todo-modal";
 import { TodoItemComponent } from "components/todo-item-component";
-
-enum Categories {
-  All = "all",
-  Active = "active",
-  Done = "done",
-}
+import { CategorySelector } from "components/category-selector";
 
 export const Todo: React.FC = () => {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
-  const [category, setCategory] = useState<Categories>(Categories.All);
-  // const displayTodos = todos;
+  const [category, setCategory] = useState<Categories>(Categories.ALL);
   const [displayTodos, setDisplayTodos] = useState<Array<TodoItem>>(todos);
   const [newTodoModalShown, setNewTodoModalShown] = useState<boolean>(false);
 
@@ -27,9 +21,9 @@ export const Todo: React.FC = () => {
   useEffect(() => {
     setDisplayTodos(
       {
-        [Categories.All]: () => todos,
-        [Categories.Active]: () => todos.filter(({ done }) => !done),
-        [Categories.Done]: () => todos.filter(({ done }) => done),
+        [Categories.ALL]: () => todos,
+        [Categories.ACTIVE]: () => todos.filter(({ done }) => !done),
+        [Categories.DONE]: () => todos.filter(({ done }) => done),
       }[category]()
     );
   }, [category, todos.length, doneLength]);
@@ -86,15 +80,10 @@ export const Todo: React.FC = () => {
         }}
       >
         <button onClick={showModal}>Add new</button>
-        <Nav
-          appearance={"tabs"}
-          activeKey={category}
-          onSelect={handleSetCategory}
-        >
-          {Object.entries(Categories).map(([title, cat]) => (
-            <Nav.Item eventKey={cat}>{title}</Nav.Item>
-          ))}
-        </Nav>
+        <CategorySelector
+          handleSelectCategory={handleSetCategory}
+          activeCategory={category}
+        />
         <AddTodoModal
           showTodoModal={newTodoModalShown}
           hideTodoModal={hideModal}

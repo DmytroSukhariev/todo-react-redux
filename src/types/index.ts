@@ -5,3 +5,9 @@ export type TodoItem = {
   createdDate: Date;
   completionDate?: Date;
 };
+
+export enum Categories {
+  ALL = "all",
+  ACTIVE = "active",
+  DONE = "done",
+}
