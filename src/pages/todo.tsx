@@ -74,9 +74,17 @@ export const Todo: React.FC = () => {
         alignContent: "center",
         justifyContent: "center",
         flexDirection: "column",
+        width: "40vw",
       }}
     >
-      <div className={"controll-pannel"} style={{ margin: "10px" }}>
+      <div
+        className={"controll-pannel"}
+        style={{
+          margin: "10px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <button onClick={showModal}>Add new</button>
         <Nav
           appearance={"tabs"}
