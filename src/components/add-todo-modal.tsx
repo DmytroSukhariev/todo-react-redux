@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Modal, Button, Input, Alert } from "rsuite";
+import { v4 as uuid } from "uuid";
 
 import { TodoItem } from "types";
 
@@ -26,6 +27,7 @@ export const AddTodoModal: React.FC<Props> = ({
       title,
       createdDate: new Date(),
       done: false,
+      id: uuid(),
     });
 
     hideTodoModal();

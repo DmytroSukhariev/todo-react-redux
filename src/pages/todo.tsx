@@ -4,6 +4,7 @@ import { Alert } from "rsuite";
 
 import { TodoItem } from "types";
 import { AddTodoModal } from "components/add-todo-modal";
+import { TodoItemComponent } from "components/todo-item-component";
 
 export const Todo: React.FC = () => {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
@@ -23,6 +24,16 @@ export const Todo: React.FC = () => {
     Alert.success("Todo added");
   };
 
+  const toggleDone = (id: string) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, done: !todo.done, completionDate: new Date() }
+          : todo
+      )
+    );
+  };
+
   return (
     <div>
       <button onClick={showModal}>Add new</button>
@@ -31,6 +42,9 @@ export const Todo: React.FC = () => {
         hideTodoModal={hideModal}
         setData={addNewTodo}
       />
+      {todos.map((todo) => (
+        <TodoItemComponent {...todo} key={todo.id} toggleDone={toggleDone} />
+      ))}
     </div>
   );
 };
