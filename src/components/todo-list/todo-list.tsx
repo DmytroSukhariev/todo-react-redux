@@ -25,6 +25,7 @@ export const TodoList: React.FC<Props> = ({
       display: "flex",
       flexDirection: "column",
       margin: "10px",
+      minHeight: "300px",
     }}
   >
     <List>
