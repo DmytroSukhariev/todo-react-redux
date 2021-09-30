@@ -7,3 +7,8 @@ export const cutStringIfNeeded = (str = ""): string => {
     shorterTitle.length !== str.length ? `${shorterTitle}...` : shorterTitle
   );
 };
+
+export const log = <T>(arg: T): T => {
+  console.log(arg);
+  return arg;
+};

@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import { Icon, Input, InputGroup } from "rsuite";
+import { useSelector } from "react-redux";
+import _ from "lodash/fp";
 
-export type Props = {
-  handleSearch: (searchQuery: string) => void;
-};
+import { useDispatch, setSearchQuery, selectSearchQuery } from "state";
 
-export const Search: React.FC<Props> = ({ handleSearch }) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+export const Search: React.FC = () => {
+  const dispatch = useDispatch();
+  const searchQuery = useSelector(selectSearchQuery);
 
-  const handleInput = (inputValue: string) => {
-    setSearchQuery(inputValue);
-    handleSearch(inputValue);
-  };
+  const [_searchQuery, _setSearchQuery] = useState<string>(searchQuery);
 
-  const handleClear = () => {
-    setSearchQuery("");
-    handleSearch("");
-  };
+  const handleInput: (inputValue: string) => void = _.flow([
+    _.over([_.flow([setSearchQuery, dispatch]), _setSearchQuery]),
+    _.noop,
+  ]);
+
+  const handleClear: () => void = _.flow([
+    _.constant(""),
+    _.over([_.flow([setSearchQuery, dispatch]), _setSearchQuery]),
+    _.noop,
+  ]);
 
   return (
     <InputGroup style={{ width: "60%" }}>
       <Input
         onChange={handleInput}
         placeholder={"Search"}
-        value={searchQuery}
+        value={_searchQuery}
       />
       <InputGroup.Button onClick={handleClear}>
         <Icon icon={"times-circle"} />

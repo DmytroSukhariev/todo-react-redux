@@ -1,43 +1,30 @@
 import React from "react";
 import { List } from "rsuite";
+import { useSelector } from "react-redux";
 
-import {
-  TodoItemComponent,
-  Props as TodoItemProps,
-} from "components/todo-item";
+import { TodoItemComponent } from "components/todo-item";
+import { selectTodos } from "state";
 
-import { TodoItem } from "types";
+export const TodoList: React.FC = () => {
+  const todos = useSelector(selectTodos);
 
-type Props = {
-  todos: Array<TodoItem>;
-  toggleDone: TodoItemProps["toggleDone"];
-  handleDelete: TodoItemProps["handleDelete"];
+  return (
+    <div
+      className={"todo-list"}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        margin: "10px",
+        minHeight: "300px",
+      }}
+    >
+      <List>
+        {todos.map((todo) => (
+          <List.Item key={todo.id}>
+            <TodoItemComponent todoItem={todo} />
+          </List.Item>
+        ))}
+      </List>
+    </div>
+  );
 };
-
-export const TodoList: React.FC<Props> = ({
-  todos,
-  toggleDone,
-  handleDelete,
-}) => (
-  <div
-    className={"todo-list"}
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      margin: "10px",
-      minHeight: "300px",
-    }}
-  >
-    <List>
-      {todos.map((todo) => (
-        <List.Item key={todo.id}>
-          <TodoItemComponent
-            {...todo}
-            toggleDone={toggleDone}
-            handleDelete={handleDelete}
-          />
-        </List.Item>
-      ))}
-    </List>
-  </div>
-);
