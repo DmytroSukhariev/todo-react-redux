@@ -9,15 +9,18 @@ const searchQuerySlice = createSlice({
   initialState,
   reducers: {
     setSearchQuery<T extends State["searchQuery"]>(
-      _: unknown,
+      _: T,
       { payload: query }: PayloadAction<T>
     ): T {
       return query;
+    },
+    clearSearchQuery() {
+      return initialState;
     },
   },
 });
 
 export const {
   reducer: searchQueryReducer,
-  actions: { setSearchQuery },
+  actions: { setSearchQuery, clearSearchQuery },
 } = searchQuerySlice;

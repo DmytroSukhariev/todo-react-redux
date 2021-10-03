@@ -9,7 +9,11 @@ export {
   addNewTodo,
   toggleDoneTodo,
 } from "state/slices/todos";
-export { selectSearchQuery, setSearchQuery } from "state/slices/searchQuery";
+export {
+  selectSearchQuery,
+  setSearchQuery,
+  clearSearchQuery,
+} from "state/slices/searchQuery";
 export {
   selectIsTodoModalVisible,
   showTodoModal,

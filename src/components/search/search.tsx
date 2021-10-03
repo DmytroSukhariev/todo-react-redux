@@ -3,7 +3,12 @@ import { Icon, Input, InputGroup } from "rsuite";
 import { useSelector } from "react-redux";
 import _ from "lodash/fp";
 
-import { useDispatch, setSearchQuery, selectSearchQuery } from "state";
+import {
+  useDispatch,
+  setSearchQuery,
+  clearSearchQuery,
+  selectSearchQuery,
+} from "state";
 
 export const Search: React.FC = () => {
   const dispatch = useDispatch();
@@ -12,12 +17,11 @@ export const Search: React.FC = () => {
   const [_searchQuery, _setSearchQuery] = useState<string>(searchQuery);
 
   const handleInput: (inputValue: string) => void = _.flow([
-    _.over([_.flow([setSearchQuery, dispatch]), _setSearchQuery]),
+    _.over([_.flow([clearSearchQuery, dispatch]), _setSearchQuery]),
     _.noop,
   ]);
 
   const handleClear: () => void = _.flow([
-    _.constant(""),
     _.over([_.flow([setSearchQuery, dispatch]), _setSearchQuery]),
     _.noop,
   ]);
