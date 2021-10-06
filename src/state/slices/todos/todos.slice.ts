@@ -18,7 +18,7 @@ const todosSlice = createSlice({
       if (_.isNil(title)) return;
       todos.push({
         title,
-        createdDate: new Date().getTime(),
+        createdDate: Date.now(),
         isDone: false,
         id: uuid(),
       });
@@ -35,7 +35,12 @@ const todosSlice = createSlice({
       if (_.isNil(todo)) return;
       const newIsDone = !todo.isDone;
       todo.isDone = newIsDone;
-      if (newIsDone) todo.completedDate = new Date().getTime();
+
+      if (newIsDone) {
+        todo.completedDate = Date.now();
+      } else {
+        delete todo.completedDate;
+      }
     },
   },
 });
