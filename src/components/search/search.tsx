@@ -22,6 +22,7 @@ export const Search: React.FC = () => {
   ]);
 
   const handleClear: () => void = _.flow([
+    _.noop,
     _.over([_.flow([clearSearchQuery, dispatch]), _setSearchQuery]),
     _.noop,
   ]);
