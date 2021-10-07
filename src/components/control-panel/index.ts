@@ -1,1 +1,1 @@
-export * from "./control-pannel";
+export * from "./control-panel";
