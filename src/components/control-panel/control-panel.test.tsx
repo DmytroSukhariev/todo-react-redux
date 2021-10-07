@@ -6,7 +6,7 @@ import { useDispatch, showTodoModal } from "state";
 import { CategorySelector } from "components/category-selector";
 import { AddTodoModal } from "components/add-todo-modal";
 
-import { ControlPanel } from "./control-pannel";
+import { ControlPanel } from "./control-panel";
 
 jest.mock("state");
 
