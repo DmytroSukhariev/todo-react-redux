@@ -30,26 +30,14 @@ describe("State", () => {
       });
 
       describe("Set category", () => {
-        it("Should set all category", () => {
-          const category = Categories.ALL;
+        describe("Should set each category", () => {
+          Object.values(Categories).forEach((category) => {
+            it(category, () => {
+              const state = categoryReducer(undefined, setCategory(category));
 
-          const state = categoryReducer(undefined, setCategory(category));
-
-          expect(state).toStrictEqual(category);
-        });
-        it("Should set done category", () => {
-          const category = Categories.DONE;
-
-          const state = categoryReducer(undefined, setCategory(category));
-
-          expect(state).toStrictEqual(category);
-        });
-        it("Should set active category", () => {
-          const category = Categories.ACTIVE;
-
-          const state = categoryReducer(undefined, setCategory(category));
-
-          expect(state).toStrictEqual(category);
+              expect(state).toStrictEqual(category);
+            });
+          });
         });
       });
     });
