@@ -4,7 +4,6 @@ import _ from "lodash/fp";
 import { useSelector } from "react-redux";
 
 import { selectCategory, setCategory, useDispatch } from "state";
-import { log } from "utils";
 
 import { Categories } from "types";
 
@@ -18,7 +17,7 @@ export const CategorySelector: React.FC = () => {
   const dispatch = useDispatch();
   const category = useSelector(selectCategory);
 
-  const handleSelectCategory = _.flow([setCategory, dispatch]);
+  const handleSelectCategory = _.flow([_.identity, setCategory, dispatch]);
 
   return (
     <Nav

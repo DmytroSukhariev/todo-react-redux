@@ -17,13 +17,14 @@ export const Search: React.FC = () => {
   const [_searchQuery, _setSearchQuery] = useState<string>(searchQuery);
 
   const handleInput: (inputValue: string) => void = _.flow([
+    _.identity,
     _.over([_.flow([setSearchQuery, dispatch]), _setSearchQuery]),
     _.noop,
   ]);
 
   const handleClear: () => void = _.flow([
     _.noop,
-    _.over([_.flow([clearSearchQuery, dispatch]), _setSearchQuery]),
+    _.over([_.flow([clearSearchQuery, dispatch]), () => _setSearchQuery("")]),
     _.noop,
   ]);
 

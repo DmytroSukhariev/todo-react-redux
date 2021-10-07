@@ -1,5 +1,5 @@
 import _ from "lodash/fp";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
 import { Nav } from "rsuite";
 import { useSelector } from "react-redux";
 
@@ -24,7 +24,7 @@ describe("<CategorySelector />", () => {
   >;
   const setCategoryMock = setCategory as unknown as jest.MockInstance<
     typeof setCategoryReturnValue,
-    []
+    [string]
   >;
   const selectCategoryMock = selectCategory as unknown as jest.MockInstance<
     string,
@@ -79,14 +79,11 @@ describe("<CategorySelector />", () => {
     describe("Should call setCategory with each category", () => {
       Object.values(Categories).forEach((category) => {
         it(category, () => {
-          const { onSelect } = shallow(<CategorySelector />)
-            .find(Nav)
-            .props();
-
-          expect(_.isFunction(onSelect)).toStrictEqual(true);
-
-          // @ts-expect-error: onSelect is a function and needs only one arg
-          onSelect(category);
+          mount(<CategorySelector />)
+            .find(Nav.Item)
+            .find({ eventKey: category })
+            .find("a")
+            .simulate("click");
 
           expect(setCategoryMock).toHaveBeenCalledWith(category);
         });
