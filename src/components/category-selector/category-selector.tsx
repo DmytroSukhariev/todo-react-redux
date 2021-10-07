@@ -4,6 +4,7 @@ import _ from "lodash/fp";
 import { useSelector } from "react-redux";
 
 import { selectCategory, setCategory, useDispatch } from "state";
+import { log } from "utils";
 
 import { Categories } from "types";
 
