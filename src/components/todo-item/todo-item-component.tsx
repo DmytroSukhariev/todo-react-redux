@@ -9,6 +9,8 @@ import { cutStringIfNeeded } from "utils";
 
 import { TodoItem } from "types";
 
+import "./todo-item-component.css";
+
 export const TodoItemComponent: React.FC<{ todoItem: TodoItem }> = ({
   todoItem: { id, title, createdDate, isDone },
 }) => {
