@@ -3,7 +3,8 @@ import _ from "lodash/fp";
 import { Categories, TodoItem } from "types";
 
 export const filterByCategory =
-  (category: Categories) => (todos: Array<TodoItem>) => {
+  (category: Categories) =>
+  (todos: Array<TodoItem>): Array<TodoItem> => {
     switch (category) {
       case Categories.ALL:
         return todos;
@@ -18,7 +19,8 @@ export const filterByCategory =
   };
 
 export const filterBySearchQuery =
-  (searchQuery: string) => (todos: Array<TodoItem>) =>
+  (searchQuery: string) =>
+  (todos: Array<TodoItem>): Array<TodoItem> =>
     _.isEmpty(searchQuery)
       ? todos
       : todos.filter(
