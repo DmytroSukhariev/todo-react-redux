@@ -37,7 +37,6 @@ export const TodoItemComponent: React.FC<{ todoItem: TodoItem }> = ({
     <div className="todo-item">
       <Checkbox
         className="todo-item-is-done-checkbox"
-        value={id}
         checked={isDone}
         onChange={toggleDone}
       />
@@ -45,7 +44,11 @@ export const TodoItemComponent: React.FC<{ todoItem: TodoItem }> = ({
       <span className="todo-item-created-date-time">
         {moment(createdDate).format("YYYY-MM-DD hh:mm")}
       </span>
-      <IconButton icon={<Icon icon="trash" />} onClick={handleDelete} />
+      <IconButton
+        className="todo-item-delete"
+        icon={<Icon icon="trash" />}
+        onClick={handleDelete}
+      />
     </div>
   );
 };
