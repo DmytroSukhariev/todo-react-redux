@@ -1,0 +1,23 @@
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-item-is-done-checkbox {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-title {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+    width: 20vw;
+}
+
+.todo-item-created-date-time {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}

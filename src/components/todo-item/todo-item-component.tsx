@@ -32,42 +32,18 @@ export const TodoItemComponent: React.FC<{ todoItem: TodoItem }> = ({
   ]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
+    <div className="todo-item">
       <Checkbox
-        style={{
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-        }}
+        className="todo-item-is-done-checkbox"
         value={id}
         checked={isDone}
         onChange={toggleDone}
       />
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          margin: "0 20px",
-          width: "20vw",
-        }}
-      >
-        {title}
-      </span>
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          margin: "0 20px",
-        }}
-      >
+      <span className="todo-item-title">{title}</span>
+      <span className="todo-item-created-date-time">
         {moment(createdDate).format("YYYY-MM-DD hh:mm")}
       </span>
-      <IconButton icon={<Icon icon={"trash"} />} onClick={handleDelete} />
+      <IconButton icon={<Icon icon="trash" />} onClick={handleDelete} />
     </div>
   );
 };
