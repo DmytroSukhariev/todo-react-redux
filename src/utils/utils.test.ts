@@ -1,4 +1,5 @@
-import { log } from "./";
+import _ from "lodash/fp";
+import { log, cutStringIfNeeded } from "./";
 
 describe("Utils", () => {
   describe("log", () => {
@@ -36,6 +37,56 @@ describe("Utils", () => {
           log(value);
           expect(consoleSpy).toHaveBeenCalledWith(value);
         });
+      });
+    });
+  });
+
+  describe("cutStringIfNeeded", () => {
+    const cutLength = 15;
+    const threeDots = "...";
+    const shortUpper = "Short_str";
+    const shortLower = "short_str";
+    const longUpper =
+      "Super long title with first uppercased letter and lowercased others";
+
+    describe("First letter", () => {
+      it("Should become uppercased if it was in lowercase initially", () => {
+        const [firstLetter] = shortLower;
+        const [firstLetterProcessed] = cutStringIfNeeded(shortLower);
+
+        expect(firstLetterProcessed).not.toStrictEqual(firstLetter);
+      });
+
+      it("Should be without changes if it was in uppercase initially", () => {
+        const [firstLetter] = shortUpper;
+        const [firstLetterProcessed] = cutStringIfNeeded(shortUpper);
+
+        expect(firstLetterProcessed).toStrictEqual(firstLetter);
+      });
+
+      it("Should left other letters without changes if it shorter", () => {
+        const [, ...otherLetters] = shortUpper;
+        const [, ...otherLettersProcessed] = cutStringIfNeeded(shortUpper);
+
+        expect(shortUpper.length).toBeLessThan(cutLength);
+        expect(otherLetters).toStrictEqual(otherLettersProcessed);
+      });
+    });
+
+    describe("Cutting", () => {
+      it("Should left short string without changes", () => {
+        expect(cutStringIfNeeded(shortUpper)).toStrictEqual(shortUpper);
+      });
+
+      it("Should cut long string and add three dots in the end", () => {
+        const cuttedLongUpper = cutStringIfNeeded(longUpper);
+
+        expect(longUpper).not.toContain(threeDots);
+        expect(cuttedLongUpper).not.toStrictEqual(longUpper);
+        expect(
+          _.startsWith(cuttedLongUpper.replace(threeDots, ""))(longUpper)
+        ).toStrictEqual(true);
+        expect(_.endsWith(threeDots)(cuttedLongUpper)).toStrictEqual(true);
       });
     });
   });
