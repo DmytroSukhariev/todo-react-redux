@@ -43,11 +43,24 @@ export const AddTodoModal: React.FC = () => {
         <Modal.Title>Add new ToDo item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Input placeholder="Title" onChange={setTitle} required />
+        <Input placeholder="Title" onChange={setTitle} />
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleHideTodoModal}>Cancel</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button
+          onClick={handleHideTodoModal}
+          appearance="ghost"
+          color="red"
+          className="cancel-button"
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={handleSubmit}
+          appearance="primary"
+          className="submit-button"
+        >
+          Submit
+        </Button>
       </Modal.Footer>
     </Modal>
   );
