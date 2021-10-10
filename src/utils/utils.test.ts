@@ -79,14 +79,14 @@ describe("Utils", () => {
       });
 
       it("Should cut long string and add three dots in the end", () => {
-        const cuttedLongUpper = cutStringIfNeeded(longUpper);
+        const cutLongUpper = cutStringIfNeeded(longUpper);
 
         expect(longUpper).not.toContain(threeDots);
-        expect(cuttedLongUpper).not.toStrictEqual(longUpper);
+        expect(cutLongUpper).not.toStrictEqual(longUpper);
         expect(
-          _.startsWith(cuttedLongUpper.replace(threeDots, ""))(longUpper)
+          _.startsWith(cutLongUpper.replace(threeDots, ""))(longUpper)
         ).toStrictEqual(true);
-        expect(_.endsWith(threeDots)(cuttedLongUpper)).toStrictEqual(true);
+        expect(_.endsWith(threeDots)(cutLongUpper)).toStrictEqual(true);
       });
     });
   });
