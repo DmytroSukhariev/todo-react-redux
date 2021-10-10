@@ -10,6 +10,8 @@ import {
   selectSearchQuery,
 } from "state";
 
+import "./search.css";
+
 export const Search: React.FC = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector(selectSearchQuery);
@@ -29,14 +31,10 @@ export const Search: React.FC = () => {
   ]);
 
   return (
-    <InputGroup style={{ width: "60%" }}>
-      <Input
-        onChange={handleInput}
-        placeholder={"Search"}
-        value={_searchQuery}
-      />
+    <InputGroup className="search-input">
+      <Input onChange={handleInput} placeholder="Search" value={_searchQuery} />
       <InputGroup.Button onClick={handleClear}>
-        <Icon icon={"times-circle"} />
+        <Icon icon="times-circle" />
       </InputGroup.Button>
     </InputGroup>
   );

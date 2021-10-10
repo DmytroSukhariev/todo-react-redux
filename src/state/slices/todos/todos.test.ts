@@ -56,6 +56,34 @@ describe("State", () => {
           );
           expect(everySelectedTodoIsActive).toStrictEqual(true);
         });
+
+        describe("Invalid category", () => {
+          let consoleErrorSpy: jest.SpyInstance;
+          const invalidCategory = "SOME_INVALID_CATEGORY" as Categories;
+
+          beforeEach(() => {
+            consoleErrorSpy = jest.spyOn(console, "error");
+          });
+
+          it("Should return all todos", () => {
+            const filterResult =
+              filters.filterByCategory(invalidCategory)(todos);
+
+            expect(filterResult).toStrictEqual(todos);
+          });
+
+          it("Should call console.error", () => {
+            filters.filterByCategory(invalidCategory)(todos);
+
+            expect(consoleErrorSpy).toHaveBeenCalled();
+          });
+
+          it("console.error should have invalid category in call", () => {
+            filters.filterByCategory(invalidCategory)(todos);
+
+            expect(consoleErrorSpy.mock.calls[0][0]).toContain(invalidCategory);
+          });
+        });
       });
 
       describe("Search query filter", () => {

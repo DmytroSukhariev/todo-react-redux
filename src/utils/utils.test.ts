@@ -49,6 +49,12 @@ describe("Utils", () => {
     const longUpper =
       "Super long title with first uppercased letter and lowercased others";
 
+    it("Should return empty string if input not provided", () => {
+      const result = cutStringIfNeeded();
+
+      expect(result).toStrictEqual("");
+    });
+
     describe("First letter", () => {
       it("Should become uppercased if it was in lowercase initially", () => {
         const [firstLetter] = shortLower;

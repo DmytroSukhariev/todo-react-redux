@@ -7,6 +7,8 @@ import { AddTodoModal } from "components/add-todo-modal";
 
 import { showTodoModal, useDispatch } from "state";
 
+import "./control-pannel.css";
+
 export const ControlPanel: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -18,15 +20,10 @@ export const ControlPanel: React.FC = () => {
   ]);
 
   return (
-    <div
-      className={"control-panel"}
-      style={{
-        margin: "10px",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <button onClick={handleShowModal}>Add new</button>
+    <div className="control-panel">
+      <button className="add-new" onClick={handleShowModal}>
+        Add new
+      </button>
       <Search />
       <CategorySelector />
       <AddTodoModal />

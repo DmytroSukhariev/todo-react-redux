@@ -2,17 +2,10 @@ import React from "react";
 import { ControlPanel } from "components/control-panel";
 import { TodoList } from "components/todo-list";
 
+import "./todo.css";
+
 export const Todo: React.FC = () => (
-  <div
-    style={{
-      minHeight: "500px",
-      display: "flex",
-      alignContent: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      width: "40vw",
-    }}
-  >
+  <div className="todo-page">
     <ControlPanel />
     <TodoList />
   </div>

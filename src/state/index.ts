@@ -1,5 +1,3 @@
-import { useDispatch as uD } from "react-redux";
-
 export { store } from "state/store";
 
 export { selectCategory, setCategory } from "state/slices/category";
@@ -19,6 +17,4 @@ export {
   showTodoModal,
   hideTodoModal,
 } from "state/slices/isTodoModalVisible";
-
-// eslint-disable-next-line
-export const useDispatch = () => uD<import("state/store").AppDispatch>();
+export * from "state/hooks";
