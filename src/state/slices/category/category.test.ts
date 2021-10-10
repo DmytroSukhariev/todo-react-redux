@@ -42,4 +42,7 @@ describe("State", () => {
       });
     });
   });
+  it("Trying to fail commit hook", () => {
+    expect(true).toStrictEqual(false);
+  });
 });
